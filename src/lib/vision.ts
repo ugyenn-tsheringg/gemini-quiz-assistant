@@ -14,9 +14,9 @@ export async function analyzeImageWithGemini(
     const base64Data = base64Image.split(',')[1] || base64Image
 
     const genAI = new GoogleGenerativeAI(apiKey)
-    // Use Gemini 1.5 Flash for speed
+    // Use Gemini 1.5 Flash (pinned version for stability)
     const model = genAI.getGenerativeModel({
-        model: 'gemini-1.5-flash',
+        model: 'gemini-1.5-flash-001',
         generationConfig: { responseMimeType: "application/json" },
         safetySettings: [
             { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
