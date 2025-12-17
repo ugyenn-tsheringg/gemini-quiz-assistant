@@ -50,17 +50,17 @@ export default function SettingsModal({ isOpen, onClose, onSave }: SettingsModal
                         <div className="space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-400 mb-1">
-                                    Google Gemini API Key
+                                    OpenRouter API Key
                                 </label>
                                 <input
                                     type="password"
                                     value={apiKey}
                                     onChange={(e) => setApiKey(e.target.value)}
-                                    placeholder="AIzaSy..."
+                                    placeholder="sk-or-v1..."
                                     className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-colors font-mono text-sm"
                                 />
                                 <p className="text-xs text-gray-600 mt-2">
-                                    Your key is stored locally in your browser. Use Gemini Flash for best speed.
+                                    Your key is stored locally in your browser. Using <strong>gemini-1.5-flash</strong> via OpenRouter.
                                 </p>
                             </div>
 
