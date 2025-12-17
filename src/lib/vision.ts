@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai'
 
 export interface AnalysisResult {
     answer: string
@@ -17,7 +17,13 @@ export async function analyzeImageWithGemini(
     // Use Gemini 1.5 Flash for speed
     const model = genAI.getGenerativeModel({
         model: 'gemini-1.5-flash',
-        generationConfig: { responseMimeType: "application/json" }
+        generationConfig: { responseMimeType: "application/json" },
+        safetySettings: [
+            { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+            { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
+            { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
+            { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+        ]
     })
 
     const prompt = `
@@ -52,6 +58,7 @@ export async function analyzeImageWithGemini(
         return JSON.parse(text) as AnalysisResult
     } catch (error) {
         console.error("Gemini Analysis Failed:", error)
-        throw new Error("Failed to analyze image. Check API Key or Internet.")
+        // Propagate the actual error message for debugging
+        throw new Error(`Analysis Error: ${(error as Error).message || JSON.stringify(error)}`)
     }
 }
